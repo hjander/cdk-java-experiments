@@ -25,3 +25,6 @@
 hs_err_pid*
 
 /.idea/
+/cdk-java-experiments.iml
+src/main/resources/
+src/test/
