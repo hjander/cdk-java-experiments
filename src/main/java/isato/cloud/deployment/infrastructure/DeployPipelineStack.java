@@ -5,9 +5,7 @@ import software.amazon.awscdk.core.Construct;
 import software.amazon.awscdk.core.SecretValue;
 import software.amazon.awscdk.core.Stack;
 import software.amazon.awscdk.pipelines.CdkPipeline;
-import software.amazon.awscdk.pipelines.CdkPipelineProps;
 import software.amazon.awscdk.pipelines.SimpleSynthAction;
-import software.amazon.awscdk.pipelines.StandardNpmSynthOptions;
 import software.amazon.awscdk.services.codepipeline.Artifact;
 import software.amazon.awscdk.services.codepipeline.actions.GitHubSourceAction;
 import software.amazon.awscdk.services.codepipeline.actions.GitHubTrigger;
@@ -18,10 +16,11 @@ public class DeployPipelineStack extends Stack {
 
         super(scope, id);
 
-        Artifact sourceArtifact = new Artifact();
-        Artifact cloudAssemblyArtifact = new Artifact();
+        Artifact sourceArtifact = Artifact.artifact("sourceArtifact");
+        Artifact cloudAssemblyArtifact = Artifact.artifact("cloudAssemblyArtifact");
 
         CdkPipeline.Builder.create(this, "DemoPipeline")
+                .cloudAssemblyArtifact(cloudAssemblyArtifact)
                 .sourceAction(
                         GitHubSourceAction.Builder.create()
                                 .actionName("GithubCheckout")
@@ -35,14 +34,15 @@ public class DeployPipelineStack extends Stack {
                 .synthAction(
                         SimpleSynthAction.Builder.create()
                                 .cloudAssemblyArtifact(cloudAssemblyArtifact)
-                                .sourceArtifact(sourceArtifact)
-                                .installCommand("npm install -g aws-cdk")
+                                .sourceArtifact(Artifact.artifact("output"))
+                                //.installCommand("npm install -g aws-cdk")
                                 .buildCommand("mvn package")
                                 .synthCommand("cdk synth")
                                 .build()
-                ).build()
 
-                .addApplicationStage(new InferenceDemoApp(null));
+                ).build();
+                //.addApplicationStage(new InferenceDemoApp(this, "PROD"));
+
 
     }
 }

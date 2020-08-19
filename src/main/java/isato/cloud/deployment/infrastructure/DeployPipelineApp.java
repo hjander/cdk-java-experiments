@@ -1,19 +1,19 @@
 package isato.cloud.deployment.infrastructure;
 
 import software.amazon.awscdk.core.App;
+import software.amazon.awscdk.core.Stack;
 
 public class DeployPipelineApp {
 
     public static void main(String[] args) {
 
         App pipelineApplication = App.Builder.create()
-                .outdir("./target")
+                .autoSynth(true)
                 .runtimeInfo(true)
                 .build();
 
-        DeployPipelineStack.Builder.create(pipelineApplication,"demo-pipeline-app")
-                .build();
-
+        //new DeployPipelineStack(pipelineApplication, "demo");
+        Stack demo = DeployPipelineStack.Builder.create(pipelineApplication, "demo").build();
         pipelineApplication.synth();
     }
 }
