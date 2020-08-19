@@ -9,6 +9,7 @@ import software.amazon.awscdk.pipelines.SimpleSynthAction;
 import software.amazon.awscdk.services.codepipeline.Artifact;
 import software.amazon.awscdk.services.codepipeline.actions.GitHubSourceAction;
 import software.amazon.awscdk.services.codepipeline.actions.GitHubTrigger;
+import software.amazon.awscdk.services.secretsmanager.Secret;
 
 public class DeployPipelineStack extends Stack {
 
@@ -19,7 +20,9 @@ public class DeployPipelineStack extends Stack {
         Artifact sourceArtifact = Artifact.artifact("sourceArtifact");
         Artifact cloudAssemblyArtifact = Artifact.artifact("cloudAssemblyArtifact");
 
-        CdkPipeline.Builder.create(this, "DemoPipeline")
+
+
+        CdkPipeline pipeline = CdkPipeline.Builder.create(this, "DemoPipeline")
                 .cloudAssemblyArtifact(cloudAssemblyArtifact)
                 .sourceAction(
                         GitHubSourceAction.Builder.create()
@@ -44,5 +47,6 @@ public class DeployPipelineStack extends Stack {
                 //.addApplicationStage(new InferenceDemoApp(this, "PROD"));
 
 
+        //Secret.Builder.create(this, "GithubTokenCDK").secretName("GithubTokenCDK").build().grantRead(pipeline);
     }
 }

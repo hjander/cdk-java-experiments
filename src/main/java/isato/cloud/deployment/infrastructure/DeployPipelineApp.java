@@ -12,8 +12,8 @@ public class DeployPipelineApp {
                 .runtimeInfo(true)
                 .build();
 
-        //new DeployPipelineStack(pipelineApplication, "demo");
-        Stack demo = DeployPipelineStack.Builder.create(pipelineApplication, "demo").build();
+        new DeployPipelineStack(pipelineApplication, "CdkDeploymentPipeline");
+        //DeployPipelineStack.Builder.create(pipelineApplication, "CdkDeploymentPipeline").build();
         pipelineApplication.synth();
     }
 }

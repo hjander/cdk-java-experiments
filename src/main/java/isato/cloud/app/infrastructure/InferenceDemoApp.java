@@ -8,6 +8,6 @@ public class InferenceDemoApp extends Stage {
 
     public InferenceDemoApp(@NotNull Construct scope, @NotNull String id) {
         super(scope, id);
-        new LambdaInferenceStack(this, "LambdaInferenceStack");
+        new LambdaInferenceStack(this, "LambdaInferenceStack1");
     }
 }
