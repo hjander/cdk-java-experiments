@@ -40,7 +40,7 @@ public class DeployPipelineStack extends Stack {
                                 .sourceArtifact(Artifact.artifact("output"))
                                 .installCommand("npm install -g aws-cdk")
                                 .buildCommand("mvn package")
-                                .synthCommand("cdk synth")
+                                .synthCommand("npm run cdk synth -- -v -o dist")
                                 .build()
 
                 ).build();
