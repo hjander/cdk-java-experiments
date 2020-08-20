@@ -38,14 +38,14 @@ public class DeployPipelineStack extends Stack {
                         SimpleSynthAction.Builder.create()
                                 .cloudAssemblyArtifact(cloudAssemblyArtifact)
                                 .sourceArtifact(Artifact.artifact("output"))
-                                //.installCommand("npm install -g aws-cdk")
+                                .installCommand("npm install -g aws-cdk")
                                 .buildCommand("mvn package")
                                 .synthCommand("cdk synth")
                                 .build()
 
                 ).build();
-                //.addApplicationStage(new InferenceDemoApp(this, "PROD"));
 
+        pipeline.addApplicationStage(new InferenceDemoApp(this, "DEV"));
 
         //Secret.Builder.create(this, "GithubTokenCDK").secretName("GithubTokenCDK").build().grantRead(pipeline);
     }
